@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -7,16 +8,18 @@ import java.io.IOException;
 public class CreateNewDatabase {
 
     public String fileName;
+    public File configFile;
+    public File dataFile;
+    public File overflowFile;
     
     CreateNewDatabase() {
         // Ask user to enter a file
-        System.out.println("Please enter name of your .csv file: ");
+        System.out.println("Please enter name of your .csv file without the extension: ");
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             this.fileName = inputReader.readLine();
 
-            System.out.println(fileName);
             // Split file into 3 other files
         } catch (IOException e) {
             System.out.println(e);
@@ -27,8 +30,9 @@ public class CreateNewDatabase {
         String cvsSplitBy = ",";
 
         try {
-
-            br = new BufferedReader(new FileReader(this.fileName));
+            this.dataFile = new File(this.fileName + ".data");
+            this.dataFile.createNewFile();
+            br = new BufferedReader(new FileReader(this.fileName + ".csv"));
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
@@ -40,6 +44,11 @@ public class CreateNewDatabase {
 
                 System.out.println();
             }
+
+            this.configFile = new File(this.fileName + ".config");
+            this.configFile.createNewFile();
+            this.overflowFile = new File(this.fileName + ".overflow");
+            this.overflowFile.createNewFile();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
