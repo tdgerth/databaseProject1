@@ -8,9 +8,9 @@ import java.io.IOException;
 public class CreateNewDatabase {
 
     public String fileName;
-    public File configFile;
-    public File dataFile;
     public File overflowFile;
+    public File dataFile;
+    public File configFile;
     
     CreateNewDatabase() {
         // Ask user to enter a file
@@ -63,5 +63,9 @@ public class CreateNewDatabase {
                 }
             }
         }
+
+        this.overflowFile = new File(this.fileName + ".config");
+        this.configFile = new File(this.fileName + ".overflow");
+        this.dataFile = new File(this.fileName + ".data");
     }
 }
