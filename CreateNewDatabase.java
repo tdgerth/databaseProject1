@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileInputStream;
@@ -125,15 +126,20 @@ public class CreateNewDatabase {
 
     // Getting the number of records from the config file
     public String getNumberOfRecords() {
-        // Reading in the number of records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
-        FileInputStream fis = new FileInputStream(this.fileName + ".config");
-        fis.getChannel().position(142);
-        byte[] numRecords = new byte[5];
-
-        fis.read(numRecords, 0, 5);
-        fis.close();
-
-        return new String(numRecords);
+        try {
+            // Reading in the number of records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
+            FileInputStream fis = new FileInputStream(this.fileName + ".config");
+            fis.getChannel().position(142);
+            byte[] numRecords = new byte[5];
+    
+            fis.read(numRecords, 0, 5);
+            fis.close();
+    
+            return new String(numRecords);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return "Error";
+        }
     }
 
     // Updating the number of records in the config file
@@ -142,14 +148,13 @@ public class CreateNewDatabase {
             String recordsToString = getNumberOfRecords();
 
             // Updating the number of records
-            System.out.println(recordsToString); 
-            recordsToString = Integer.toString(numRecordsIn);            
+            recordsToString = Integer.toString(numRecordsIn);
 
             // Writing the updated number of records back to the config file
-            FileOutputStream fos = new FileOutputStream(this.fileName + ".config");
-            fos.getChannel().position(133);
-            fos.write(recordsToString.getBytes());
-            fos.close();
+            RandomAccessFile raf = new RandomAccessFile(this.fileName + ".config", "rws");
+            raf.getChannel().position(142);
+            raf.write(recordsToString.getBytes());
+            raf.close();
   
         } catch (IOException ex) {
             ex.printStackTrace();
