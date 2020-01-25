@@ -1,8 +1,10 @@
 public class Main {
     public static void main(String[] args) {
-        DatabaseOperations dbOps = new DatabaseOperations();
+        ApplicationWrapper application = new ApplicationWrapper();
+        application.startApplication();
+        // DatabaseOperations dbOps = new DatabaseOperations();
 
-        String database = dbOps.openDatabase();
-        System.out.println(database);
+        // String database = dbOps.openDatabase();
+        // System.out.println(database);
     }
 }
