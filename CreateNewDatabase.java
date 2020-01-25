@@ -13,7 +13,10 @@ import java.io.FileWriter;
 
 public class CreateNewDatabase {
 
-    public String fileName;
+    public String databaseName;
+    public boolean validDatabaseName = true;
+
+    private DatabaseOperations dbOps;
 
     public File overflowFile;
     public File dataFile;
@@ -21,65 +24,65 @@ public class CreateNewDatabase {
 
     public byte[] currentRecord = new byte[89];
     
-    CreateNewDatabase(String csvFileName) {
-        this.fileName = csvFileName;
+    // Creating a new database with all three necessary files and instantiating them
+    CreateNewDatabase() {
+        inputDatabaseName();
 
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ",";
+        if (this.validDatabaseName == true) {
 
-        try {
-            this.dataFile = new File(this.fileName + ".data");
-            this.dataFile.createNewFile();
+            this.dbOps = new DatabaseOperations(this.databaseName);
 
-            FileWriter dataFileWriter = new FileWriter(this.dataFile.toString());
-            PrintWriter dataFilePrinter = new PrintWriter(dataFileWriter);
-
-            createConfigFile();
-
-            br = new BufferedReader(new FileReader(this.fileName + ".csv"));
-
-            // Saving the number of lines in the csv file to calculate the number of records
-            int numLines = -1;
-
-            while ((line = br.readLine()) != null) {
-
-                // Each record will contain 89 bytes on windows and 88 on linux
-                String[] record = line.split(cvsSplitBy);
-
-                dataFilePrinter.printf("%-5s", record[0]);
-                dataFilePrinter.printf("%-40s", record[1]);
-                dataFilePrinter.printf("%-20s", record[2]);
-                dataFilePrinter.printf("%-6s", record[3]);
-                dataFilePrinter.printf("%-6s", record[4]);
-                dataFilePrinter.printf("%-10s", record[5]);
-                dataFilePrinter.printf(System.getProperty("line.separator"));
-
-                // System.out.printf("%-5s", record[0]);
-                // System.out.printf("%-40s", record[1]);
-                // System.out.printf("%-20s", record[2]);
-                // System.out.printf("%-6s", record[3]);
-                // System.out.printf("%-6s", record[4]);
-                // System.out.printf("%-10s", record[5]);
-                // System.out.printf(System.getProperty("line.separator"));
-
-                numLines++;
-            }
-            dataFilePrinter.close();
-
-            updateNumRecords(numLines);
-            createOverflowFile();
-
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+            BufferedReader br = null;
+            String line = "";
+            String cvsSplitBy = ",";
+    
+            try {
+                this.dataFile = new File(this.databaseName + ".data");
+                this.dataFile.createNewFile();
+    
+                FileWriter dataFileWriter = new FileWriter(this.dataFile.toString());
+                PrintWriter dataFilePrinter = new PrintWriter(dataFileWriter);
+    
+                createConfigFile();
+    
+                br = new BufferedReader(new FileReader(this.databaseName + ".csv"));
+    
+                // Saving the number of lines in the csv file to calculate the number of records
+                int numLines = -1;
+    
+                while ((line = br.readLine()) != null) {
+    
+                    // Each record will contain 89 bytes on windows and 88 on linux
+                    String[] record = line.split(cvsSplitBy);
+    
+                    dataFilePrinter.printf("%-5s", record[0]);
+                    dataFilePrinter.printf("%-40s", record[1]);
+                    dataFilePrinter.printf("%-20s", record[2]);
+                    dataFilePrinter.printf("%-6s", record[3]);
+                    dataFilePrinter.printf("%-6s", record[4]);
+                    dataFilePrinter.printf("%-10s", record[5]);
+                    dataFilePrinter.printf(System.getProperty("line.separator"));
+    
+                    numLines++;
+                }
+                dataFilePrinter.close();
+    
+                this.dbOps.updateNumRecords("normal", numLines);
+                this.dbOps.updateNumRecords("overflow", 0);
+                this.dbOps.updateHighestRank(numLines);
+                createOverflowFile();
+    
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
@@ -88,7 +91,7 @@ public class CreateNewDatabase {
     // Creating the config file for the database
     public void createConfigFile() {
         try {
-            this.configFile = new File(this.fileName + ".config");
+            this.configFile = new File(this.databaseName + ".config");
             this.configFile.createNewFile();
 
             FileWriter configFileWriter = new FileWriter(this.configFile.toString());
@@ -106,7 +109,11 @@ public class CreateNewDatabase {
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-20s", "EMPLOYEES,10");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-13s", "RECORDS,0");
+            configFilePrinter.printf("%-13s", "RECORDS,");
+            configFilePrinter.print(System.getProperty("line.separator"));
+            configFilePrinter.printf("%-18s", "OVERFLOW-RECORDS,");
+            configFilePrinter.print(System.getProperty("line.separator"));
+            configFilePrinter.printf("%-18s", "HIGHEST-RANK,");
 
             configFilePrinter.close();
         } catch (IOException ex) {
@@ -117,47 +124,24 @@ public class CreateNewDatabase {
     // Creating the overflow file for the database
     public void createOverflowFile() {
         try {
-            this.overflowFile = new File(this.fileName + ".overflow");
+            this.overflowFile = new File(this.databaseName + ".overflow");
             this.overflowFile.createNewFile();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    // Getting the number of records from the config file
-    public String getNumberOfRecords() {
+    // Asking the user for the name of the database
+    public void inputDatabaseName() {
+        // Ask user to enter a file
+        System.out.println("Please enter name of your .csv file without the extension: ");
+        BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+
         try {
-            // Reading in the number of records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
-            FileInputStream fis = new FileInputStream(this.fileName + ".config");
-            fis.getChannel().position(142);
-            byte[] numRecords = new byte[5];
-    
-            fis.read(numRecords, 0, 5);
-            fis.close();
-    
-            return new String(numRecords);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return "Error";
+            this.databaseName = inputReader.readLine();
+        } catch (IOException e) {
+            System.out.println(e);
+            this.validDatabaseName = false;
         }
-    }
-
-    // Updating the number of records in the config file
-    public void updateNumRecords(int numRecordsIn) {
-        try {
-            String recordsToString = getNumberOfRecords();
-
-            // Updating the number of records
-            recordsToString = Integer.toString(numRecordsIn);
-
-            // Writing the updated number of records back to the config file
-            RandomAccessFile raf = new RandomAccessFile(this.fileName + ".config", "rws");
-            raf.getChannel().position(142);
-            raf.write(recordsToString.getBytes());
-            raf.close();
-  
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }  
     }
 }
