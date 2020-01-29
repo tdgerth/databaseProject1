@@ -112,6 +112,56 @@ public class DatabaseOperations {
         }  
     }
 
+     /*Get record number n-th (from 1 to 4360) */
+    //public static String getRecord(RandomAccessFile Din, int recordNum) throws IOException 
+    public String getRecord(RandomAccessFile Din, int recordNum) throws IOException 
+    {
+    String record = "NOT_FOUND";
+    int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));
+        if ((recordNum >=1) && (recordNum <= NUM_RECORDS))
+        {
+            Din.seek(0); // return to the top fo the file
+            Din.skipBytes(recordNum * 89);
+            record = Din.readLine();
+        }
+        return record;
+    }
+
+    /*Binary Search record id */
+    public String binarySearch(RandomAccessFile Din, String id) throws IOException 
+    {
+    int Low = 0;
+    int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));;
+    int High = NUM_RECORDS-1;
+    int Middle;
+    String MiddleId;
+    String record = "";
+    boolean Found = false;
+
+        
+    while (!Found && (High >= Low)) 
+    {
+        Middle = (High+Low) / 2;
+        record = getRecord(Din, Middle+1);
+        MiddleId = record.substring(5,45);
+        MiddleId = MiddleId.trim();
+        int result = MiddleId.compareTo(id);
+        if (result == 0)   // ids match
+            Found = true;
+        else if (result < 0)
+            Low = Middle + 1;
+        else
+            High = Middle - 1;
+    }
+    if (Found)
+       return record;
+    else
+       return "NOT_FOUND";
+}
+
+
+
+
     // Either adding a new record to the overflow file or merging the overflow back into the normal records
     public void addRecord() {
         int numOverflowRecords = Integer.parseInt(getNumberOfRecords("overflow"));
@@ -127,5 +177,18 @@ public class DatabaseOperations {
 
             System.out.println("Record Added...");
         }
+    }
+
+    public void displayRecord(String companyName) {
+        try {
+            RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
+            System.out.println(this.binarySearch(din, companyName));
+            din.close();
+            
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
     }
 }

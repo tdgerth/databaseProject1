@@ -53,6 +53,18 @@ public class ApplicationWrapper {
                     break;
                 case "4":
                     System.out.println("Display");
+                    System.out.println("Please enter the name of the company you want to display. ");
+                    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+
+                    String companyName = "";
+
+                    try {
+                        companyName = inputReader.readLine();
+                    } catch (IOException ex) {
+                        System.out.println(ex);
+                    }
+
+                    dbOps.displayRecord(companyName);
                     break;
                 case "5":
                     System.out.println("Update");
