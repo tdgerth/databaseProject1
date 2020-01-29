@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -119,6 +118,54 @@ public class DatabaseOperations {
         if (numOverflowRecords == 4) {
             System.out.println("Sort all records");
         } else {
+
+            System.out.println(getHighestRank());
+
+            int rankForNewRecord = Integer.parseInt(getHighestRank()) + 1;
+
+            byte [] companyNameBytes = new byte[40];
+            byte [] companyCityBytes = new byte[20];
+            byte [] companyStateBytes = new byte[6];
+            byte [] companyZipCodeBytes = new byte[6];
+            byte [] companyEmployeesBytes = new byte[10];
+
+            // User input for each of the fields ******************
+
+            byte [] companyRankBytes = HelperFunctions.addWhitespacesToEnd(Integer.toString(rankForNewRecord), 5).getBytes();
+
+            // Input for name of company
+            System.out.println("Please enter the name of the company (truncated at 40 characters): ");
+            companyNameBytes = HelperFunctions.getInputData(40);
+
+            // Input for city the company is located in
+            System.out.println("Please enter the city the company is located in (truncated at 20 characters): ");
+            companyCityBytes = HelperFunctions.getInputData(20);
+
+            // Input for state the company is located in
+            System.out.println("Please enter the state the company is located in (truncated at 6 characters): ");
+            companyStateBytes = HelperFunctions.getInputData(6);
+
+            // Input for zip code of company
+            System.out.println("Please enter the zip code of the company (truncated at 6 characters): ");
+            companyZipCodeBytes = HelperFunctions.getInputData(6);
+
+            // Input for number of employees of company
+            System.out.println("Please enter the comapny's number of employees (truncated at 10 charactes): ");
+            companyEmployeesBytes = HelperFunctions.getInputData(10);
+
+            byte [] newLineBytes = new String("\n").getBytes();
+
+            // End user input ************************************
+
+            // Add bytes to overflow file
+            addRecordToOverflow(companyRankBytes, numOverflowRecords * 88);
+            addRecordToOverflow(companyNameBytes, numOverflowRecords * 88 + 5);
+            addRecordToOverflow(companyCityBytes, numOverflowRecords * 88 + 45);
+            addRecordToOverflow(companyStateBytes, numOverflowRecords * 88 + 65);
+            addRecordToOverflow(companyZipCodeBytes, numOverflowRecords * 88 + 71);
+            addRecordToOverflow(companyEmployeesBytes, numOverflowRecords * 88 + 77);
+            addRecordToOverflow(newLineBytes, numOverflowRecords * 88 + 87);
+
             numOverflowRecords++;
             updateNumRecords("overflow", numOverflowRecords);
 
@@ -126,6 +173,19 @@ public class DatabaseOperations {
             updateHighestRank(Integer.parseInt(currentHighestRank) + 1);
 
             System.out.println("Record Added...");
+        }
+    }
+
+    private void addRecordToOverflow(byte [] input, int startLocation) {
+        try {
+            // Writing a field to the overflow file
+            RandomAccessFile raf = new RandomAccessFile(this.databaseName + ".overflow", "rws");
+
+            raf.getChannel().position(startLocation);
+            raf.write(input);
+            raf.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
