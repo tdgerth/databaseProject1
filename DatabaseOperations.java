@@ -114,6 +114,7 @@ public class DatabaseOperations {
 
      /*Get record number n-th (from 1 to 4360) */
     //public static String getRecord(RandomAccessFile Din, int recordNum) throws IOException 
+    // Provided by Dr. Gauch
     public String getRecord(RandomAccessFile Din, int recordNum) throws IOException 
     {
     String record = "NOT_FOUND";
@@ -128,6 +129,7 @@ public class DatabaseOperations {
     }
 
     /*Binary Search record id */
+    // Provided by Dr. Gauch
     public String binarySearch(RandomAccessFile Din, String id) throws IOException 
     {
     int Low = 0;
@@ -178,7 +180,7 @@ public class DatabaseOperations {
             System.out.println("Record Added...");
         }
     }
-
+    // Displays record that is found using binary search, and uses company name as the key
     public void displayRecord(String companyName) {
         try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
