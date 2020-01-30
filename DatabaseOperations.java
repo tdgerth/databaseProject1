@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 
 public class DatabaseOperations {
@@ -14,28 +16,72 @@ public class DatabaseOperations {
     // Getting the number of records from the config file
     public String getNumberOfRecords(String recordType) {
         try {
-            FileInputStream fis = new FileInputStream(this.databaseName + ".config");
+            RandomAccessFile raf = new RandomAccessFile(this.databaseName + ".config", "rws");
 
             if (recordType.equals("normal")) {
                 // Reading in the number of normal records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
-                fis.getChannel().position(142);
+                raf.getChannel().position(142);
                 byte[] numRecords = new byte[5];
         
-                fis.read(numRecords, 0, 5);
-                fis.close();
+                raf.read(numRecords, 0, 5);
+                raf.close();
                 return new String(numRecords).stripTrailing();
             } else {
                 // Reading in the number of overflow records from the .config file starting from offset 166 (there the number for OVERFLOW-RECORDS begins)
-                fis.getChannel().position(166);
+                raf.getChannel().position(166);
                 byte[] numOverflowRecords = new byte[1];
         
-                fis.read(numOverflowRecords, 0, 1);
-                fis.close();
+                raf.read(numOverflowRecords, 0, 1);
+                raf.close();
                 return new String(numOverflowRecords).stripTrailing();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
             return "Error";
+        }
+    }
+
+    public byte [] getRecordBytes(String recordType, int recordNumber) {
+        try {
+            RandomAccessFile recordFile;
+
+            if (recordType == "overflow") {
+                recordFile = new RandomAccessFile(this.databaseName + ".overflow", "rws");
+            } else {
+                recordFile = new RandomAccessFile(this.databaseName + ".data", "rws");
+            }
+
+            recordFile.getChannel().position(89 * recordNumber);
+            byte [] record = new byte[89];
+    
+            recordFile.read(record, 0, 89);
+            recordFile.close();
+            return record;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return new byte [10];
+        }
+    }
+
+    public String getRecordCompanyName(String recordType, int recordNumber) {
+        try {
+            RandomAccessFile recordFile;
+
+            if (recordType == "overflow") {
+                recordFile = new RandomAccessFile(this.databaseName + ".overflow", "rws");
+            } else {
+                recordFile = new RandomAccessFile(this.databaseName + ".data", "rws");
+            }
+
+            recordFile.getChannel().position((89 * recordNumber) + 5);
+            byte [] record = new byte[40];
+    
+            recordFile.read(record, 0, 40);
+            recordFile.close();
+            return new String(record).stripTrailing();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return new String("Error");
         }
     }
 
@@ -61,6 +107,22 @@ public class DatabaseOperations {
         } catch (IOException ex) {
             ex.printStackTrace();
         }  
+    }
+
+    public void updateRecords(String recordType, byte [] record, int recordNumber) {
+        try {
+            // Writing the updated number of records back to the config file
+            RandomAccessFile raf = new RandomAccessFile(this.databaseName + ".data", "rws");
+
+            if (recordType.equals("normal")) {
+                raf.getChannel().position(89 * recordNumber);
+                raf.write(record);
+                raf.close();
+            }
+  
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     // Retrieving the highest overall rank so it can be incremented for new records
@@ -164,65 +226,72 @@ public class DatabaseOperations {
     public void addRecord() {
         int numOverflowRecords = Integer.parseInt(getNumberOfRecords("overflow"));
 
-        if (numOverflowRecords == 4) {
-            System.out.println("Sort all records");
+        int rankForNewRecord = Integer.parseInt(getHighestRank()) + 1;
+
+        byte [] companyNameBytes = new byte[40];
+        byte [] companyCityBytes = new byte[20];
+        byte [] companyStateBytes = new byte[6];
+        byte [] companyZipCodeBytes = new byte[6];
+        byte [] companyEmployeesBytes = new byte[10];
+
+        // User input for each of the fields ******************
+
+        byte [] companyRankBytes = HelperFunctions.addWhitespacesToEnd(Integer.toString(rankForNewRecord), 5).getBytes();
+
+        // Input for name of company
+        System.out.println("Please enter the name of the company (truncated at 40 characters): ");
+        companyNameBytes = HelperFunctions.getInputDataBytes(40);
+
+        // Input for city the company is located in
+        System.out.println("Please enter the city the company is located in (truncated at 20 characters): ");
+        companyCityBytes = HelperFunctions.getInputDataBytes(20);
+
+        // Input for state the company is located in
+        System.out.println("Please enter the state the company is located in (truncated at 6 characters): ");
+        companyStateBytes = HelperFunctions.getInputDataBytes(6);
+
+        // Input for zip code of company
+        System.out.println("Please enter the zip code of the company (truncated at 6 characters): ");
+        companyZipCodeBytes = HelperFunctions.getInputDataBytes(6);
+
+        // Input for number of employees of company
+        System.out.println("Please enter the comapny's number of employees (truncated at 10 charactes): ");
+        companyEmployeesBytes = HelperFunctions.getInputDataBytes(10);
+
+        byte [] newLineBytes = System.getProperty("line.separator").getBytes();
+
+        // End user input ************************************
+
+        // Add bytes to overflow file
+        addRecordToOverflow(companyRankBytes, numOverflowRecords * 89);
+        addRecordToOverflow(companyNameBytes, numOverflowRecords * 89 + 5);
+        addRecordToOverflow(companyCityBytes, numOverflowRecords * 89 + 45);
+        addRecordToOverflow(companyStateBytes, numOverflowRecords * 89 + 65);
+        addRecordToOverflow(companyZipCodeBytes, numOverflowRecords * 89 + 71);
+        addRecordToOverflow(companyEmployeesBytes, numOverflowRecords * 89 + 77);
+        addRecordToOverflow(newLineBytes, numOverflowRecords * 89 + 87);
+
+        numOverflowRecords++;
+
+        if (numOverflowRecords > 4) {
+            mergeSortRecords(numOverflowRecords);
+            updateNumRecords("overflow", 0);
+
+            try {
+                PrintWriter clearOverflow = new PrintWriter(this.databaseName + ".overflow");
+                clearOverflow.write("");
+                clearOverflow.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         } else {
-
-            System.out.println(getHighestRank());
-
-            int rankForNewRecord = Integer.parseInt(getHighestRank()) + 1;
-
-            byte [] companyNameBytes = new byte[40];
-            byte [] companyCityBytes = new byte[20];
-            byte [] companyStateBytes = new byte[6];
-            byte [] companyZipCodeBytes = new byte[6];
-            byte [] companyEmployeesBytes = new byte[10];
-
-            // User input for each of the fields ******************
-
-            byte [] companyRankBytes = HelperFunctions.addWhitespacesToEnd(Integer.toString(rankForNewRecord), 5).getBytes();
-
-            // Input for name of company
-            System.out.println("Please enter the name of the company (truncated at 40 characters): ");
-            companyNameBytes = HelperFunctions.getInputData(40);
-
-            // Input for city the company is located in
-            System.out.println("Please enter the city the company is located in (truncated at 20 characters): ");
-            companyCityBytes = HelperFunctions.getInputData(20);
-
-            // Input for state the company is located in
-            System.out.println("Please enter the state the company is located in (truncated at 6 characters): ");
-            companyStateBytes = HelperFunctions.getInputData(6);
-
-            // Input for zip code of company
-            System.out.println("Please enter the zip code of the company (truncated at 6 characters): ");
-            companyZipCodeBytes = HelperFunctions.getInputData(6);
-
-            // Input for number of employees of company
-            System.out.println("Please enter the comapny's number of employees (truncated at 10 charactes): ");
-            companyEmployeesBytes = HelperFunctions.getInputData(10);
-
-            byte [] newLineBytes = new String("\n").getBytes();
-
-            // End user input ************************************
-
-            // Add bytes to overflow file
-            addRecordToOverflow(companyRankBytes, numOverflowRecords * 88);
-            addRecordToOverflow(companyNameBytes, numOverflowRecords * 88 + 5);
-            addRecordToOverflow(companyCityBytes, numOverflowRecords * 88 + 45);
-            addRecordToOverflow(companyStateBytes, numOverflowRecords * 88 + 65);
-            addRecordToOverflow(companyZipCodeBytes, numOverflowRecords * 88 + 71);
-            addRecordToOverflow(companyEmployeesBytes, numOverflowRecords * 88 + 77);
-            addRecordToOverflow(newLineBytes, numOverflowRecords * 88 + 87);
-
-            numOverflowRecords++;
             updateNumRecords("overflow", numOverflowRecords);
-
-            String currentHighestRank = getHighestRank().stripTrailing();
-            updateHighestRank(Integer.parseInt(currentHighestRank) + 1);
-
-            System.out.println("Record Added...");
         }
+
+        String currentHighestRank = getHighestRank().stripTrailing();
+        updateHighestRank(Integer.parseInt(currentHighestRank) + 1);
+
+        System.out.println("Record Added...");
     }
 
     private void addRecordToOverflow(byte [] input, int startLocation) {
@@ -233,7 +302,7 @@ public class DatabaseOperations {
             raf.getChannel().position(startLocation);
             raf.write(input);
             raf.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -249,5 +318,74 @@ public class DatabaseOperations {
         } catch (IOException ex) {
             ex.printStackTrace();
         } 
+    }
+    private void mergeSortRecords(int numOverflowRecords) {
+
+        for (int i = 0; i < numOverflowRecords; i++) {
+            byte [] overflowRecord = getRecordBytes("overflow", i);
+            String overflowRecordCompanyName = getRecordCompanyName("overflow", i);
+
+            // Find the closest record alphabetically so the overflow record can be merged
+            int closest = binarySearchToFindClosest(overflowRecordCompanyName, 1, Integer.parseInt(getNumberOfRecords("normal")));
+
+            if (overflowRecordCompanyName.compareTo(getRecordCompanyName("normal", closest)) < 1) {
+                byte [] temp = getRecordBytes("normal", closest);
+                updateRecords("normal", overflowRecord, closest);
+                rearrangeRestOfDatabase(temp, closest + 1);
+            } else {
+                rearrangeRestOfDatabase(overflowRecord, closest + 1);
+            }
+        }
+    }
+
+    // Binary search to find the closest existing record alphabetically to the overflow record
+    private int binarySearchToFindClosest(String overflowName, int bottomRecord, int topRecord) {
+        if (bottomRecord == 0) {
+            return 1;
+        }
+        // Base condition for only having two records left to choose from
+        if (topRecord - bottomRecord == 1) {
+            String topRecordName = getRecordCompanyName("normal", topRecord);
+
+            // If the name of the overflow company comes after the company name of the top record, then the top record is the closest
+            if (overflowName.compareTo(topRecordName) >= 1) {
+                return topRecord;
+            // Otherwise, either the top and bottom records are equal length away, or the bottom record is closer, so return the bottom record
+            } else {
+                return bottomRecord;
+            }
+        // Base condition for having only 1 record left means that that record is the closest
+        } else if (topRecord == bottomRecord) {
+            return topRecord;
+        }
+
+        int middle = (topRecord + bottomRecord) / 2;
+        String nameOfNormalRecord = getRecordCompanyName("normal", middle);
+        int alphabeticalOrder = overflowName.compareTo(nameOfNormalRecord);
+        if (alphabeticalOrder == 0) {
+            return middle;
+        } else if (alphabeticalOrder < 0) {
+            return binarySearchToFindClosest(overflowName, bottomRecord, middle);
+        } else {
+            return binarySearchToFindClosest(overflowName, middle + 1, topRecord);
+        }        
+    }
+
+    private void rearrangeRestOfDatabase(byte[] startRecord, int start) {
+        int totalRecords = Integer.parseInt(getNumberOfRecords("normal"));
+        if (start == totalRecords) {
+            updateRecords("normal", startRecord, start);
+            updateNumRecords("normal", totalRecords);
+        } else if (start >= 1 && start <= totalRecords + 1) {
+            int i;
+            for (i = start; i <= totalRecords; i++) {
+                byte [] temp = getRecordBytes("normal", i);
+                updateRecords("normal", startRecord, i);
+                startRecord = temp;
+            }
+            updateRecords("normal", startRecord, i);
+            totalRecords++;
+            updateNumRecords("normal", totalRecords);
+        }
     }
 }

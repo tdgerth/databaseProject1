@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -12,7 +15,7 @@ public class HelperFunctions {
         byte [] userInputBytes = new byte[sizeOfArray];
 
         try {
-            userInput = inputReader.readLine();
+            userInput = inputReader.readLine().toUpperCase();
 
             userInput = HelperFunctions.addWhitespacesToEnd(userInput, sizeOfArray);
 
