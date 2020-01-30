@@ -182,7 +182,7 @@ public class DatabaseOperations {
     public void displayRecord(String companyName) {
         try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
-            System.out.println(this.binarySearch(din, companyName));
+            System.out.println(this.binarySearch(din, companyName.toUpperCase()));
             din.close();
             
 
