@@ -178,8 +178,8 @@ public class DatabaseOperations {
         // Provided by Dr. Gauch
         public String getRecord(RandomAccessFile Din, int recordNum) throws IOException 
         {
-        String record = "NOT_FOUND";
-        int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));
+            String record = "NOT_FOUND";
+            int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));
             if ((recordNum >=1) && (recordNum <= NUM_RECORDS))
             {
                 Din.seek(0); // return to the top fo the file
@@ -193,31 +193,32 @@ public class DatabaseOperations {
     // Provided by Dr. Gauch
     public int binarySearch(RandomAccessFile Din, String id) throws IOException 
     {
-    int Low = 0;
-    int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));;
-    int High = NUM_RECORDS-1;
-    int Middle;
-    String MiddleId;
-    String record = "";
-    boolean Found = false;
+        int Low = 0;
+        int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));;
+        int High = NUM_RECORDS-1;
+        int Middle;
+        String MiddleId;
+        String record = "";
+        boolean Found = false;
 
-        
-    while (!Found && (High >= Low)) 
-    {
-        Middle = (High+Low) / 2;
-        record = getRecord(Din, Middle+1);
-        MiddleId = record.substring(5,45);
-        MiddleId = MiddleId.trim();
-        int result = MiddleId.compareTo(id);
-        if (result == 0)   // ids match
-            return Middle;
-        else if (result < 0)
-            Low = Middle + 1;
-        else
-            High = Middle - 1;
+            
+        while (!Found && (High >= Low)) 
+        {
+            Middle = (High+Low) / 2;
+            record = getRecord(Din, Middle+1);
+            MiddleId = record.substring(5,45);
+            MiddleId = MiddleId.trim();
+            int result = MiddleId.compareTo(id);
+            if (result == 0)   // ids match
+                return Middle;
+            else if (result < 0)
+                Low = Middle + 1;
+            else
+                High = Middle - 1;
+        }
+        return -1;
     }
-       return -1;
-}
+    
     // Either adding a new record to the overflow file or merging the overflow back into the normal records
     public void addRecord() {
         int numOverflowRecords = Integer.parseInt(getNumberOfRecords("overflow"));
@@ -231,7 +232,6 @@ public class DatabaseOperations {
         byte [] companyEmployeesBytes = new byte[10];
 
         // User input for each of the fields ******************
-
         byte [] companyRankBytes = HelperFunctions.addWhitespacesToEnd(Integer.toString(rankForNewRecord), 5).getBytes();
 
         // Input for name of company

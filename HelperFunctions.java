@@ -31,4 +31,20 @@ public class HelperFunctions {
 
         return userInputBytes;
     }
+
+    public static String getInputDataString() {
+        BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+        String userInput;
+
+        try {
+            userInput = inputReader.readLine().toUpperCase();
+
+            return userInput;
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
+        return "Error";
+    }
 }
