@@ -1,10 +1,10 @@
-import java.io.File;
+
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.io.BufferedReader;
 
 public class DatabaseOperations {
     public String databaseName;
@@ -189,39 +189,35 @@ public class DatabaseOperations {
             return record;
         }
 
-        /*Binary Search record id */
-        // Provided by Dr. Gauch
-        public String binarySearch(RandomAccessFile Din, String id) throws IOException 
-        {
-        int Low = 0;
-        int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));;
-        int High = NUM_RECORDS-1;
-        int Middle;
-        String MiddleId;
-        String record = "";
-        boolean Found = false;
+    /*Binary Search record id */
+    // Provided by Dr. Gauch
+    public int binarySearch(RandomAccessFile Din, String id) throws IOException 
+    {
+    int Low = 0;
+    int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));;
+    int High = NUM_RECORDS-1;
+    int Middle;
+    String MiddleId;
+    String record = "";
+    boolean Found = false;
 
-            
-        while (!Found && (High >= Low)) 
-        {
-            Middle = (High+Low) / 2;
-            record = getRecord(Din, Middle+1);
-            MiddleId = record.substring(5,45);
-            MiddleId = MiddleId.trim();
-            int result = MiddleId.compareTo(id);
-            if (result == 0)   // ids match
-                Found = true;
-            else if (result < 0)
-                Low = Middle + 1;
-            else
-                High = Middle - 1;
-        }
-        if (Found)
-        return record;
+        
+    while (!Found && (High >= Low)) 
+    {
+        Middle = (High+Low) / 2;
+        record = getRecord(Din, Middle+1);
+        MiddleId = record.substring(5,45);
+        MiddleId = MiddleId.trim();
+        int result = MiddleId.compareTo(id);
+        if (result == 0)   // ids match
+            return Middle;
+        else if (result < 0)
+            Low = Middle + 1;
         else
-        return "NOT_FOUND";
+            High = Middle - 1;
     }
-
+       return -1;
+}
     // Either adding a new record to the overflow file or merging the overflow back into the normal records
     public void addRecord() {
         int numOverflowRecords = Integer.parseInt(getNumberOfRecords("overflow"));
@@ -311,7 +307,13 @@ public class DatabaseOperations {
     public void displayRecord(String companyName) {
         try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
-            System.out.println(this.binarySearch(din, companyName.toUpperCase()));
+            int record = this.binarySearch(din, companyName.toUpperCase());
+            if(record != -1){
+                System.out.println(this.getRecord(din, record+1));
+            } else {
+                System.out.println("NOT FOUND");
+            }
+           
             din.close();
             
 
@@ -386,6 +388,91 @@ public class DatabaseOperations {
             updateRecords("normal", startRecord, i);
             totalRecords++;
             updateNumRecords("normal", totalRecords);
+        }
+    }
+
+    public void updateRecord(String companyName) {
+        String option = "";
+        boolean quit = false;
+        byte [] numEmplyees = new byte[10];
+        byte [] cityName = new byte[20];
+        byte [] rank = new byte[5];
+        byte [] state = new byte[6];
+        byte [] zip = new byte[6];
+
+        BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+ 
+         try {
+            RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
+            int recordNumber = this.binarySearch(din, companyName.toUpperCase());
+            System.out.println(recordNumber);
+            if(recordNumber != -1){
+                
+                while(!quit){
+                    System.out.println("What would you like to change?");
+                    System.out.println("[1] Rank");
+                    System.out.println("[2] City");
+                    System.out.println("[3] State"); 
+                    System.out.println("[4] Zip Code");
+                    System.out.println("[5] Number of Employees");
+                    System.out.println("[6] done updating");
+                    option = inputReader.readLine();
+                    switch(option) {
+                        case "1":
+                            System.out.println("Enter updated Rank");
+                            option = inputReader.readLine();
+                            option = String.format("%-5s", option);
+                            rank = option.getBytes();
+                            din.getChannel().position((89 * (recordNumber+1)));
+                            din.write(rank); 
+                            break;
+                        case "2":
+                            System.out.println("Enter updated City");
+                            option = inputReader.readLine();
+                            option = String.format("%-20s", option.toUpperCase());
+                            cityName = option.getBytes();
+                            din.getChannel().position((89 * (recordNumber+1))+45);
+                            din.write(cityName);                        
+                            break;
+                        case "3":
+                            System.out.println("Enter updated State Abbreviation");
+                            option = inputReader.readLine();
+                            option = String.format("%-6s", option.toUpperCase());
+                            state = option.getBytes();
+                            din.getChannel().position((89 * (recordNumber+1))+65);
+                            din.write(state);
+                            break;
+                        case "4":
+                            System.out.println("Enter updated Zip Code");
+                            option = inputReader.readLine();
+                            option = String.format("%-6s", option);
+                            zip = option.getBytes();
+                            din.getChannel().position((89 * (recordNumber+1))+71);
+                            din.write(zip);
+                            break;
+                        case "5":
+                            System.out.println("Enter updated Number of Employees");
+                            option = inputReader.readLine();
+                            option = String.format("%-10s", option);
+                            numEmplyees = option.getBytes();
+                            din.getChannel().position((89 * (recordNumber+1))+77);
+                            din.write(numEmplyees);
+                            break;
+                        case "6":
+                            quit = true;
+                            din.close();
+                            break;
+                        default:
+                            System.out.println("That is not a valid option, please select a valid option");
+                            break;    
+                    }
+                }
+            }else{
+                System.out.println("NOT FOUND");
+                return;
+            }  
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

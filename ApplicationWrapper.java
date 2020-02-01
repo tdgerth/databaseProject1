@@ -10,6 +10,8 @@ public class ApplicationWrapper {
     private boolean quit = false;
     private String currentDatabase;
     private DatabaseOperations dbOps;
+    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+    String companyName = "";
 
     public void startApplication() {
         System.out.println("Welcome to the database application!");
@@ -53,21 +55,36 @@ public class ApplicationWrapper {
                     break;
                 case "4":
                     System.out.println("Display");
-                    System.out.println("Please enter the name of the company you want to display. ");
-                    BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+                    if (this.currentDatabase == null) {
+                        System.out.println("There is no database currently open.");
+                    }else{
+                        System.out.println("Please enter the name of the company you want to display. ");
+                        try {
+                            companyName = inputReader.readLine();
+                        } catch (IOException ex) {
+                            System.out.println(ex);
+                        }
 
-                    String companyName = "";
-
-                    try {
-                        companyName = inputReader.readLine();
-                    } catch (IOException ex) {
-                        System.out.println(ex);
+                        dbOps.displayRecord(companyName);  
                     }
-
-                    dbOps.displayRecord(companyName);
+                    
                     break;
                 case "5":
-                    System.out.println("Update");
+                System.out.println("Update");
+                    companyName = "";
+
+                    if (this.currentDatabase == null) {
+                        System.out.println("There are no database currently open.");
+                    }else{
+                        System.out.println("Please enter the name of the company who's record you want to update. ");
+                        try {
+                            companyName = inputReader.readLine();
+                        } catch (IOException ex) {
+                            System.out.println(ex);
+                        }
+
+                        dbOps.updateRecord(companyName);
+                    }
                     break;
                 case "6":
                     System.out.println("Report");
