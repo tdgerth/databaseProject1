@@ -22,7 +22,7 @@ public class CreateNewDatabase {
     public File dataFile;
     public File configFile;
 
-    public byte[] currentRecord = new byte[89];
+    public byte[] currentRecord = new byte[84];
     
     // Creating a new database with all three necessary files and instantiating them
     CreateNewDatabase() {
@@ -49,17 +49,20 @@ public class CreateNewDatabase {
     
                 // Saving the number of lines in the csv file to calculate the number of records
                 int numLines = -1;
+
+                // Skipping the first line which holds the string names of each column
+                line = br.readLine();
     
                 while ((line = br.readLine()) != null) {
     
-                    // Each record will contain 89 bytes on windows and 88 on linux
+                    // Each record will contain 84 bytes on windows and 83 on linux
                     String[] record = line.split(cvsSplitBy);
     
                     dataFilePrinter.printf("%-5s", record[0]);
                     dataFilePrinter.printf("%-40s", record[1]);
                     dataFilePrinter.printf("%-20s", record[2]);
-                    dataFilePrinter.printf("%-6s", record[3]);
-                    dataFilePrinter.printf("%-6s", record[4]);
+                    dataFilePrinter.printf("%-2s", record[3]);
+                    dataFilePrinter.printf("%-5s", record[4]);
                     dataFilePrinter.printf("%-10s", record[5]);
                     dataFilePrinter.printf(System.getProperty("line.separator"));
     
@@ -67,9 +70,9 @@ public class CreateNewDatabase {
                 }
                 dataFilePrinter.close();
     
-                this.dbOps.updateNumRecords("normal", numLines);
+                this.dbOps.updateNumRecords("normal", numLines + 1);
                 this.dbOps.updateNumRecords("overflow", 0);
-                this.dbOps.updateHighestRank(numLines);
+                this.dbOps.updateHighestRank(numLines + 1);
                 createOverflowFile();
     
             } catch (FileNotFoundException ex) {
@@ -103,9 +106,9 @@ public class CreateNewDatabase {
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-25s", "CITY,20");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-12s", "STATE,6");
+            configFilePrinter.printf("%-8s", "STATE,2");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-10s", "ZIP,6");
+            configFilePrinter.printf("%-9s", "ZIP,6");
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-20s", "EMPLOYEES,10");
             configFilePrinter.print(System.getProperty("line.separator"));
@@ -138,7 +141,19 @@ public class CreateNewDatabase {
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
-            this.databaseName = inputReader.readLine();
+            String inputDatabaseName = inputReader.readLine();
+            if (new File(inputDatabaseName + ".data").exists()) {
+                System.out.println("This database already exists. Would you like to overwrite it? (y/n)");
+                if (inputReader.readLine().equals("y")) {
+                    new File(inputDatabaseName + ".data").delete();
+                    new File(inputDatabaseName + ".config").delete();
+                    new File(inputDatabaseName + ".overflow").delete();
+                    this.databaseName = inputDatabaseName;
+                } else {
+                    System.out.println("Returning to Menu...");
+                    this.validDatabaseName = false;
+                }
+            }
         } catch (IOException e) {
             System.out.println(e);
             this.validDatabaseName = false;

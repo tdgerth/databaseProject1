@@ -22,9 +22,6 @@ public class ApplicationWrapper {
             switch (selectedOption) {
                 case "1":
                     CreateNewDatabase newDb = new CreateNewDatabase();
-                    if (newDb.validDatabaseName != true) {
-                        System.out.println("Invalid database file. Please try again!");
-                    }
                     break;
                 case "2":
                     if  (this.currentDatabase != null) {
@@ -68,7 +65,6 @@ public class ApplicationWrapper {
                     
                     break;
                 case "5":
-                System.out.println("Update");
                     companyName = "";
 
                     if (this.currentDatabase == null) {
