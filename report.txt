@@ -1,0 +1,10 @@
+94   3M                                      MAPLEWOOD           MN5514491584     
+135  ABBOTT LABORATORIES                     SANTA MONICA        CA9040175000     
+111  ABBVIE                                  NORTH CHICAGO       IL6006430000     
+500  ABM INDUSTRIES                          NEW YORK            NY10176110000    
+406  ACTIVISION BLIZZARD                     SANTA MONICA        CA904059500      
+443  ADOBE SYSTEMS                           MCLEAN              VA2210215706     
+240  ADP                                     ROSELAND            NJ7068 57000     
+292  ADVANCE AUTO PARTS                      ROANOKE             VA2401257500     
+161  AECOM                                   LOS ANGELES         CA9006787000     
+194  AES                                     ARLINGTON           VA2220319000     

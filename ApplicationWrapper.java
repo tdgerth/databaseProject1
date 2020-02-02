@@ -81,7 +81,11 @@ public class ApplicationWrapper {
                     }
                     break;
                 case "6":
-                    System.out.println("Report");
+                if (this.currentDatabase == null) {
+                    System.out.println("There are no database currently open.");
+                }else{
+                    dbOps.createReport();
+                }
                     break;
                 case "7":
                     if (this.currentDatabase == null) {
