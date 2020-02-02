@@ -47,4 +47,15 @@ public class HelperFunctions {
 
         return "Error";
     }
+
+    public static String displayReadableRecord(String record) {
+        String readableRecord = record.substring(0, 5) + " " 
+            + record.substring(5, 45) + " " 
+            + record.substring(45, 65) + " " 
+            + record.substring(65, 68) + " " 
+            + record.substring(68, 74) + " " 
+            + record.substring(74, 84);
+
+        return readableRecord;
+    }
 }
