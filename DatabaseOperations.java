@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
 
 public class DatabaseOperations {
     public String databaseName;
@@ -23,7 +25,7 @@ public class DatabaseOperations {
 
             if (recordType.equals("normal")) {
                 // Reading in the number of normal records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
-                raf.getChannel().position(137);
+                raf.getChannel().position(139);
                 byte[] numRecords = new byte[5];
         
                 raf.read(numRecords, 0, 5);
@@ -136,7 +138,7 @@ public class DatabaseOperations {
             if (recordType.equals("normal")) {
                 String currentNumRecords = HelperFunctions.addWhitespacesToEnd(Integer.toString(numRecordsIn), 5);
 
-                raf.getChannel().position(137);
+                raf.getChannel().position(139);
                 raf.write(currentNumRecords.getBytes());
                 raf.close();
             } else {
@@ -197,6 +199,7 @@ public class DatabaseOperations {
         }  
     }
 
+    //update all parts of record except for key
     public void updateRecord(String companyName) {
         String option = "";
         boolean quit = false;
@@ -210,9 +213,11 @@ public class DatabaseOperations {
  
          try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
+            //find company to update
             int recordNumber = this.binarySearch(din, companyName.toUpperCase());
+            //if company found
             if(recordNumber != -1){
-                
+                //untill the user wants to stop updating
                 while(!quit){
                     System.out.println("What would you like to change?");
                     System.out.println("[1] Rank");
@@ -226,9 +231,11 @@ public class DatabaseOperations {
                         case "1":
                             System.out.println("Enter updated Rank");
                             option = inputReader.readLine();
+                            //format input to fixed length
                             option = String.format("%-5s", option);
                             rank = option.getBytes();
                             din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1)));
+                            //replace current rank with new rank
                             din.write(rank); 
                             break;
                         case "2":
@@ -242,7 +249,7 @@ public class DatabaseOperations {
                         case "3":
                             System.out.println("Enter updated State Abbreviation");
                             option = inputReader.readLine();
-                            option = String.format("%-2s", option.toUpperCase());
+                            option = String.format("%-3s", option.toUpperCase());
                             state = option.getBytes();
                             din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+65);
                             din.write(state);
@@ -250,9 +257,9 @@ public class DatabaseOperations {
                         case "4":
                             System.out.println("Enter updated Zip Code");
                             option = inputReader.readLine();
-                            option = String.format("%-5s", option);
+                            option = String.format("%-6s", option);
                             zip = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+67);
+                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+68);
                             din.write(zip);
                             break;
                         case "5":
@@ -260,7 +267,7 @@ public class DatabaseOperations {
                             option = inputReader.readLine();
                             option = String.format("%-10s", option);
                             numEmplyees = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+72);
+                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+74);
                             din.write(numEmplyees);
                             break;
                         case "6":
@@ -272,7 +279,9 @@ public class DatabaseOperations {
                             break;    
                     }
                 }
-            }else{
+            }
+            //if not found, let the user know
+            else{
                 System.out.println("NOT FOUND");
                 return;
             }  
@@ -492,9 +501,12 @@ public class DatabaseOperations {
         try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
             int record = this.binarySearch(din, companyName.toUpperCase());
+            //if company is found display the company
             if(record != -1){
                 System.out.println(this.getRecord("normal", din, record + 1));
-            } else {
+            } 
+            //if not, let the user know
+            else {
                 System.out.println("NOT FOUND");
             }
            
@@ -577,5 +589,21 @@ public class DatabaseOperations {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    public void createReport(){
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(this.databaseName + ".data"));
+            FileWriter report = new FileWriter( "report.txt");
+            for(int i = 1; i < 11 ; i++) {
+             report.write(br.readLine() + System.getProperty("line.separator"));
+            }  
+            report.close();
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("report.txt created");
     }
 }
