@@ -22,7 +22,7 @@ public class CreateNewDatabase {
     public File dataFile;
     public File configFile;
 
-    public byte[] currentRecord = new byte[84];
+    public byte[] currentRecord = new byte[86];
     
     // Creating a new database with all three necessary files and instantiating them
     CreateNewDatabase() {
@@ -61,8 +61,8 @@ public class CreateNewDatabase {
                     dataFilePrinter.printf("%-5s", record[0]);
                     dataFilePrinter.printf("%-40s", record[1]);
                     dataFilePrinter.printf("%-20s", record[2]);
-                    dataFilePrinter.printf("%-2s", record[3]);
-                    dataFilePrinter.printf("%-5s", record[4]);
+                    dataFilePrinter.printf("%-3s", record[3]);
+                    dataFilePrinter.printf("%-6s", record[4]);
                     dataFilePrinter.printf("%-10s", record[5]);
                     dataFilePrinter.printf(System.getProperty("line.separator"));
     
@@ -106,7 +106,7 @@ public class CreateNewDatabase {
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-25s", "CITY,20");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-8s", "STATE,2");
+            configFilePrinter.printf("%-8s", "STATE,3");
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-9s", "ZIP,6");
             configFilePrinter.print(System.getProperty("line.separator"));
