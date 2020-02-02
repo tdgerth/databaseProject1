@@ -25,7 +25,7 @@ public class DatabaseOperations {
 
             if (recordType.equals("normal")) {
                 // Reading in the number of normal records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
-                raf.getChannel().position(137);
+                raf.getChannel().position(139);
                 byte[] numRecords = new byte[5];
         
                 raf.read(numRecords, 0, 5);
@@ -138,7 +138,7 @@ public class DatabaseOperations {
             if (recordType.equals("normal")) {
                 String currentNumRecords = HelperFunctions.addWhitespacesToEnd(Integer.toString(numRecordsIn), 5);
 
-                raf.getChannel().position(137);
+                raf.getChannel().position(139);
                 raf.write(currentNumRecords.getBytes());
                 raf.close();
             } else {
@@ -249,7 +249,7 @@ public class DatabaseOperations {
                         case "3":
                             System.out.println("Enter updated State Abbreviation");
                             option = inputReader.readLine();
-                            option = String.format("%-2s", option.toUpperCase());
+                            option = String.format("%-3s", option.toUpperCase());
                             state = option.getBytes();
                             din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+65);
                             din.write(state);
@@ -257,9 +257,9 @@ public class DatabaseOperations {
                         case "4":
                             System.out.println("Enter updated Zip Code");
                             option = inputReader.readLine();
-                            option = String.format("%-5s", option);
+                            option = String.format("%-6s", option);
                             zip = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+67);
+                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+68);
                             din.write(zip);
                             break;
                         case "5":
@@ -267,7 +267,7 @@ public class DatabaseOperations {
                             option = inputReader.readLine();
                             option = String.format("%-10s", option);
                             numEmplyees = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+72);
+                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+74);
                             din.write(numEmplyees);
                             break;
                         case "6":
