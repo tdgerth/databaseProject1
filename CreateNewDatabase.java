@@ -142,19 +142,25 @@ public class CreateNewDatabase {
 
         try {
             String inputDatabaseName = inputReader.readLine();
-            if (new File(inputDatabaseName + ".data").exists()) {
-                System.out.println("This database already exists. Would you like to overwrite it? (y/n)");
-                if (inputReader.readLine().equals("y")) {
-                    new File(inputDatabaseName + ".data").delete();
-                    new File(inputDatabaseName + ".config").delete();
-                    new File(inputDatabaseName + ".overflow").delete();
-                    this.databaseName = inputDatabaseName;
-                } else {
-                    System.out.println("Returning to Menu...");
-                    this.validDatabaseName = false;
+            if (new File(inputDatabaseName + ".csv").exists()) {
+                if (new File(inputDatabaseName + ".data").exists()) {
+                    System.out.println("This database already exists. Would you like to overwrite it? (y/n)");
+                    if (inputReader.readLine().equals("y")) {
+                        new File(inputDatabaseName + ".data").delete();
+                        new File(inputDatabaseName + ".config").delete();
+                        new File(inputDatabaseName + ".overflow").delete();
+                        this.databaseName = inputDatabaseName;
+                    } else {
+                        System.out.println("Returning to Menu...");
+                        this.validDatabaseName = false;
+                    }
                 }
+            } else {
+                System.out.println("There is no .csv file with that name");
+                this.validDatabaseName = false;
             }
         } catch (IOException e) {
+            System.out.println("here");
             System.out.println(e);
             this.validDatabaseName = false;
         }
