@@ -106,7 +106,7 @@ public class CreateNewDatabase {
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-7s", "CITY,20");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-8s", "STATE,3");
+            configFilePrinter.printf("%-7s", "STATE,3");
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-5s", "ZIP,6");
             configFilePrinter.print(System.getProperty("line.separator"));
