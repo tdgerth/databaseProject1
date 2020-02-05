@@ -261,9 +261,9 @@ public class DatabaseOperations {
                             // option = String.format("%-5s", option.toUpperCase());
                             // rank = option.getBytes();
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1)));
-                                //replace current rank with new rank
-                                din.write(update);     
+                                recordNumber = binarySearchToFindClosest(companyName.trim().toUpperCase(), 0, Integer.parseInt(getNumberOfRecords(recordLocation)));
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber)));
+                                din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber)));
                                 //replace current rank with new rank
@@ -277,8 +277,9 @@ public class DatabaseOperations {
                             // option = String.format("%-20s", option.toUpperCase());
                             // cityName = option.getBytes();
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+45);
-                                din.write(update);   
+                                recordNumber = binarySearchToFindClosest(companyName.trim().toUpperCase(), 0, Integer.parseInt(getNumberOfRecords(recordLocation)));
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+45);
+                                din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+45);
                                 oin.write(update);   
@@ -291,7 +292,8 @@ public class DatabaseOperations {
                             // state = option.getBytes();
                             update = HelperFunctions.getInputDataBytes(3);
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+65);
+                                recordNumber = binarySearchToFindClosest(companyName.trim().toUpperCase(), 0, Integer.parseInt(getNumberOfRecords(recordLocation)));
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+65);
                                 din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+65);
@@ -305,7 +307,8 @@ public class DatabaseOperations {
                             // zip = option.getBytes();
                             update = HelperFunctions.getInputDataBytes(6);
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+68);
+                                recordNumber = binarySearchToFindClosest(companyName.trim().toUpperCase(), 0, Integer.parseInt(getNumberOfRecords(recordLocation)));
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+68);
                                 din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+68);
@@ -319,7 +322,8 @@ public class DatabaseOperations {
                             // numEmplyees = option.getBytes();
                             update = HelperFunctions.getInputDataBytes(10);
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+74);
+                                recordNumber = binarySearchToFindClosest(companyName.trim().toUpperCase(), 0, Integer.parseInt(getNumberOfRecords(recordLocation)));
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+74);
                                 din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+74);
@@ -441,11 +445,7 @@ public class DatabaseOperations {
             if (deleteLocation != -1) {
 
                 deleteLocation = binarySearchToFindClosest(companyName, 0, Integer.parseInt(getNumberOfRecords("normal")));
-                // if (deleteLocation == 0) {
-                    rafData.getChannel().position(Constants.NUM_BYTES_LINUX_RECORD * deleteLocation + Constants.NUM_BYTES_RANK);
-                // } else {
-                //     rafData.getChannel().position(Constants.NUM_BYTES_LINUX_RECORD * (deleteLocation + 1) + Constants.NUM_BYTES_RANK);
-                // }
+                rafData.getChannel().position(Constants.NUM_BYTES_LINUX_RECORD * deleteLocation + Constants.NUM_BYTES_RANK);
 
                 rafData.write(HelperFunctions.addWhitespacesToEnd("MISSING-RECORD", Constants.NUM_BYTES_COMPANY_NAME).getBytes(), 0, Constants.NUM_BYTES_COMPANY_NAME);
                 rafData.close();
@@ -602,11 +602,8 @@ public class DatabaseOperations {
             //if company is found display the company
             if(record != -1){
                 if (recordLocation.equals("normal")) {
-                    if (record == 0) {
-                        System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("normal", din, record)));
-                    } else {
-                        System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("normal", din, record + 1)));
-                    }
+                    record = binarySearchToFindClosest(companyName.trim().toUpperCase(), 0, Integer.parseInt(getNumberOfRecords(recordLocation)));
+                    System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("normal", din, record)));
                 } else {
                     System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("overflow", oin, record)));
                 }
@@ -704,14 +701,36 @@ public class DatabaseOperations {
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.databaseName + ".data"));
             FileWriter report = new FileWriter( "report.txt");
+            PrintWriter reportFilePrinter = new PrintWriter(report);
+            reportFilePrinter.printf("%-6s", "RANK");
+            reportFilePrinter.printf("%-41s", "COMPANY NAME ");
+            reportFilePrinter.printf("%-21s", "CITY");
+            reportFilePrinter.printf("%-6s", "STATE");
+            reportFilePrinter.printf("%-7s", "ZIP");
+            reportFilePrinter.printf("%-10s", "EMPLOYEES");
+            reportFilePrinter.printf(System.getProperty("line.separator"));
 
             if (numRecords < 10) {
-                for(int i = 1; i < numRecords ; i++) {
-                    report.write(HelperFunctions.displayReadableRecord(br.readLine()) + System.getProperty("line.separator"));
+                for(int i = 0; i < numRecords ; i++) {
+                    String record = br.readLine();
+                    reportFilePrinter.printf("%-5s", record.substring(0, 5) + " ");
+                    reportFilePrinter.printf("%-40s", record.substring(5, 45) + " ");
+                    reportFilePrinter.printf("%-20s", record.substring(45, 65) + " ");
+                    reportFilePrinter.printf("%-6s", record.substring(65, 68) + " ");
+                    reportFilePrinter.printf("%-6s", record.substring(68, 74) + " ");
+                    reportFilePrinter.printf("%-10s", record.substring(74, 84));
+                    reportFilePrinter.printf(System.getProperty("line.separator"));
                 } 
             } else {
-                for(int i = 1; i < 11 ; i++) {
-                    report.write(HelperFunctions.displayReadableRecord(br.readLine()) + System.getProperty("line.separator"));
+                for(int i = 0; i < 11 ; i++) {
+                    String record = br.readLine();
+                    reportFilePrinter.printf("%-5s", record.substring(0, 5) + " ");
+                    reportFilePrinter.printf("%-40s", record.substring(5, 45) + " ");
+                    reportFilePrinter.printf("%-20s", record.substring(45, 65) + " ");
+                    reportFilePrinter.printf("%-6s", record.substring(65, 68) + " ");
+                    reportFilePrinter.printf("%-6s", record.substring(68, 74) + " ");
+                    reportFilePrinter.printf("%-10s", record.substring(74, 84));
+                    reportFilePrinter.printf(System.getProperty("line.separator"));
                 }  
             }
             report.close();
