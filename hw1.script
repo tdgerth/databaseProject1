@@ -1,6 +1,24 @@
-Script started on Tue 04 Feb 2020 09:26:16 PM CST
-]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ javac *.java
-]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ java Main
+Script started on Tue 04 Feb 2020 11:36:03 PM CST
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ ls -lt
+total 160
+-rw-rw---- 1 grdirkso grdirkso     0 Feb  4 23:36 typescript
+-rw-rw---- 1 grdirkso grdirkso  1758 Feb  4 23:34 HelperFunctions.class
+-rw-rw---- 1 grdirkso grdirkso   331 Feb  4 23:34 Main.class
+-rw-rw---- 1 grdirkso grdirkso  4362 Feb  4 23:34 CreateNewDatabase.class
+-rw-rw---- 1 grdirkso grdirkso   761 Feb  4 23:34 Constants.class
+-rw-rw---- 1 grdirkso grdirkso 11849 Feb  4 23:34 DatabaseOperations.class
+-rw-rw---- 1 grdirkso grdirkso  5294 Feb  4 23:34 ApplicationWrapper.class
+-rw-rw---- 1 grdirkso grdirkso   627 Feb  4 23:34 ApplicationWrapper$1.class
+-rw-rw---- 1 grdirkso grdirkso    18 Feb  4 21:23 README.md
+-rw-rw---- 1 grdirkso grdirkso   180 Feb  4 21:23 Main.java
+-rw-rw---- 1 grdirkso grdirkso 28381 Feb  4 21:23 Homework1Report.docx
+-rw-rw---- 1 grdirkso grdirkso  1791 Feb  4 21:23 HelperFunctions.java
+-rw-rw---- 1 grdirkso grdirkso 21725 Feb  4 21:23 Fortune_500_HQ.csv
+-rw-rw---- 1 grdirkso grdirkso 32414 Feb  4 21:23 DatabaseOperations.java
+-rw-rw---- 1 grdirkso grdirkso  6645 Feb  4 21:23 CreateNewDatabase.java
+-rw-rw---- 1 grdirkso grdirkso   534 Feb  4 21:23 Constants.java
+-rw-rw---- 1 grdirkso grdirkso  7327 Feb  4 21:23 ApplicationWrapper.java
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ javac [K[K[K[K[K[Kjaba[K[Kva Main
 Welcome to the database application!
 
 Please enter which operation number you would like to complete (or enter 'q' to quit):
@@ -14,39 +32,46 @@ Please enter which operation number you would like to complete (or enter 'q' to 
 	[7] Add Record
 	[8] Delete Record
 
-Selection: 2
-There are no existing databases. Please create one.
-Database Selection: 1
-Invalid database selection
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: hello
-Invalid option selected. Please try again!
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
 Selection: 1
 Please enter name of your .csv file without the extension: 
-Fortune_4 500_h HQ
+Fortune_500_HQ
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: q
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ ls -lt
+total 208
+-rw-rw---- 1 grdirkso grdirkso   109 Feb  4 23:36 Fortune_500_HQ.config
+-rw-rw---- 1 grdirkso grdirkso     0 Feb  4 23:36 Fortune_500_HQ.overflow
+-rw-rw---- 1 grdirkso grdirkso 42500 Feb  4 23:36 Fortune_500_HQ.data
+-rw-rw---- 1 grdirkso grdirkso     0 Feb  4 23:36 typescript
+-rw-rw---- 1 grdirkso grdirkso  1758 Feb  4 23:34 HelperFunctions.class
+-rw-rw---- 1 grdirkso grdirkso   331 Feb  4 23:34 Main.class
+-rw-rw---- 1 grdirkso grdirkso  4362 Feb  4 23:34 CreateNewDatabase.class
+-rw-rw---- 1 grdirkso grdirkso   761 Feb  4 23:34 Constants.class
+-rw-rw---- 1 grdirkso grdirkso 11849 Feb  4 23:34 DatabaseOperations.class
+-rw-rw---- 1 grdirkso grdirkso  5294 Feb  4 23:34 ApplicationWrapper.class
+-rw-rw---- 1 grdirkso grdirkso   627 Feb  4 23:34 ApplicationWrapper$1.class
+-rw-rw---- 1 grdirkso grdirkso    18 Feb  4 21:23 README.md
+-rw-rw---- 1 grdirkso grdirkso   180 Feb  4 21:23 Main.java
+-rw-rw---- 1 grdirkso grdirkso 28381 Feb  4 21:23 Homework1Report.docx
+-rw-rw---- 1 grdirkso grdirkso  1791 Feb  4 21:23 HelperFunctions.java
+-rw-rw---- 1 grdirkso grdirkso 21725 Feb  4 21:23 Fortune_500_HQ.csv
+-rw-rw---- 1 grdirkso grdirkso 32414 Feb  4 21:23 DatabaseOperations.java
+-rw-rw---- 1 grdirkso grdirkso  6645 Feb  4 21:23 CreateNewDatabase.java
+-rw-rw---- 1 grdirkso grdirkso   534 Feb  4 21:23 Constants.java
+-rw-rw---- 1 grdirkso grdirkso  7327 Feb  4 21:23 ApplicationWrapper.java
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ java Maon[K[K[Kain
+Welcome to the database application!
 
 Please enter which operation number you would like to complete (or enter 'q' to quit):
 
@@ -61,386 +86,6 @@ Please enter which operation number you would like to complete (or enter 'q' to 
 
 Selection: 4
 There is no database currently open.
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 2
-The existing databases are listed below. Please enter which one you would like to open
-	Fortune_500_HQ
-Database Selection: hello
-Invalid database selection
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 2
-The existing databases are listed below. Please enter which one you would like to open
-	Fortune_500_HQ
-Database Selection: Fortune_500) _HQ
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-walmart
-1     WALMART                                  BENTONVILLE          AR  72716  2300000   
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-hello
-NOT FOUND
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 5
-Please enter the name of the company who's record you want to update. 
-walmart
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-1
-Enter updated Rank
-1000
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-6
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-walmart
-1000  WALMART                                  BENTONVILLE          AR  72716  2300000   
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 5
-Please enter the name of the company who's record you want to update. 
-walmart
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-1
-Enter updated Rank
-500
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-2
-Enter updated City
-Columbus
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-3
-Enter updated State Abbreviation
-e Georgia
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-4
-Enter updated Zip Code
-31820
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-5
-Enter updated Number of Employees
-23
-What would you like to change?
-[1] Rank
-[2] City
-[3] State
-[4] Zip Code
-[5] Number of Employees
-[6] done updating
-6
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-walmart
-500   WALMART                                  COLUMBUS             GEO 31820  23        
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 7
-Please enter the name of the company (truncated at 40 characters): 
-Doruts   itos
-Please enter the city the company is located in (truncated at 20 characters): 
-Fayetteville
-Please enter the state the company is located in (truncated at 3 characters): 
-Arkansas       R
-Please enter the zip code of the company (truncated at 6 characters): 
-318209
-Please enter the company's number of employees (truncated at 10 charactes): 
-2300000
-Record Added...
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-doer  ritos
-501   DORITOS                                  FAYETTEVILLE         AR  318209 2300000   
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 8
-Please enter the name of the company you wish to delete
-walmart
-Deleting Record...
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-walmart
-NOT FOUND
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 8
-Please enter the name of the company you wish to delete
-doritos
-Deleting Record...
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-Please enter the name of the company you want to display. 
-doritos
-NOT FOUND
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 2
-Please close the existing database 'Fortune_500_HQ' first.
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 3
-Closing database...
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 1
-Please enter name of your .csv file without the extension: 
-Fortun ne_500_HQ
-This database already exists. Would you like to overwrite it? (y/n)
-y
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: 4
-There is no database currently open.
-
-Please enter which operation number you would like to complete (or enter 'q' to quit):
-
-	[1] Create Database
-	[2] Open Database
-	[3] Close Database
-	[4] Display Record
-	[5] Update Record
-	[6] Create Report
-	[7] Add Record
-	[8] Delete Record
-
-Selection: walmart
-Invalid option selected. Please try again!
 
 Please enter which operation number you would like to complete (or enter 'q' to quit):
 
@@ -472,6 +117,54 @@ Please enter which operation number you would like to complete (or enter 'q' to 
 
 Selection: 4
 Please enter the name of the company you want to display. 
+3m
+94    3M                                       MAPLEWOOD            MN  55144  91584     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+zimmer biomet holdings
+352   ZIMMER BIOMET HOLDINGS                   WARSAW               IN  46580  18500     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+mycompany
+NOT FOUND
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
 walmart
 1     WALMART                                  BENTONVILLE          AR  72716  2300000   
 
@@ -486,5 +179,1058 @@ Please enter which operation number you would like to complete (or enter 'q' to 
 	[7] Add Record
 	[8] Delete Record
 
+Selection: 5
+Please enter the name of the company who's record you want to update. 
+walmart
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+5
+Enter updated Number of Employees
+2350000
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+4
+Enter updated Zip Code
+72791  19
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+6
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+walmart
+1     WALMART                                  BENTONVILLE          AR  72719  2350000   
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 6
+report.txt created
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+secret machines
+Please enter the city the company is located in (truncated at 20 characters): 
+bentonville
+Please enter the state the company is located in (truncated at 3 characters): 
+ar
+Please enter the zip code of the company (truncated at 6 characters): 
+72719
+Please enter the company's number of employees (truncated at 10 charactes): 
+2300
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+chicken fars  s  ms
+Please enter the city the company is located in (truncated at 20 characters): 
+fayetteville
+Please enter the state the company is located in (truncated at 3 characters): 
+AR
+Please enter the zip code of the company (truncated at 6 characters): 
+72701
+Please enter the company's number of employees (truncated at 10 charactes): 
+3400
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+omnic
+Please enter the city the company is located in (truncated at 20 characters): 
+Columbus     ombus
+Please enter the state the company is located in (truncated at 3 characters): 
+GA
+Please enter the zip code of the company (truncated at 6 characters): 
+31820
+Please enter the company's number of employees (truncated at 10 charactes): 
+240
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+secret Machines
+501   SECRET MACHINES                          BENTONVILLE          AR  72719  2300      
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 8
+Please enter the name of the company you wish to delete
+els   e wells fargo
+Deleting Record...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+wels ls fargo
+NOT FOUND
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+minions utopia
+Please enter the city the company is located in (truncated at 20 characters): 
+springdale
+Please enter the state the company is located in (truncated at 3 characters): 
+72701 2
+Please enter the zip code of the company (truncated at 6 characters): 
+`	 72702
+Please enter the company's number of employees (truncated at 10 charactes): 
+34
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+maga mech
+Please enter the city the company is located in (truncated at 20 characters): 
+prarie grove
+Please enter the state the company is located in (truncated at 3 characters): 
+ar
+Please enter the zip code of the company (truncated at 6 characters): 
+72756
+Please enter the company's number of employees (truncated at 10 charactes): 
+231
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+sect ret machines
+501   SECRET MACHINES                          BENTONVILLE          AR  72719  2300      
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+apple
+3     APPLE                                    CUPERTINO            CA  95014  116000    
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+3m
+94    3M                                       MAPLEWOOD            MN  55144  91584     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+zimmer biomet holdings
+352   ZIMMER BIOMET HOLDINGS                   WARSAW               IN  46580  18500     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 3
+Closing database...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+There is no database currently open.
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
 Selection: q
-]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ cat typescript                                                                                                                                            
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ java Main
+Welcome to the database application!
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 2
+The existing databases are listed below. Please enter which one you would like to open
+	Fortune_500_HQ
+Database Selection: 1
+Invalid database selection
+Opening database...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 1
+Please enter name of your .csv file without the extension: 
+Fortune_500_HQ
+This database already exists. Would you like to overwrite it? (y/n)
+y
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please open a database first to add the record to.
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 2
+The existing databases are listed below. Please enter which one you would like to open
+	Fortune_500_HQ
+Database Selection: Fortune_500_HQ
+Opening database...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+G Doritos
+Please enter the city the company is located in (truncated at 20 characters): 
+fayetteville
+Please enter the state the company is located in (truncated at 3 characters): 
+arkansas
+Please enter the zip code of the company (truncated at 6 characters): 
+72701
+Please enter the company's number of employees (truncated at 10 charactes): 
+2300000000
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+doritos
+501   DORITOS                                  FAYETTEVILLE         ARK 72701  2300000000
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 5
+Please enter the name of the company who's record you want to update. 
+doritos
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+1
+Enter updated Rank
+200
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+6
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+doritos
+200   DORITOS                                  FAYETTEVILLE         ARK 72701  2300000000
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 8
+Please enter the name of the company you wish to delete
+f doritos
+Deleting Record...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+doritos
+NOT FOUND
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: q
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ ^C
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ cat script
+cat: script: No such file or directory
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ cat typescript
+Script started on Tue 04 Feb 2020 11:36:03 PM CST
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ ls -lt
+total 160
+-rw-rw---- 1 grdirkso grdirkso     0 Feb  4 23:36 typescript
+-rw-rw---- 1 grdirkso grdirkso  1758 Feb  4 23:34 HelperFunctions.class
+-rw-rw---- 1 grdirkso grdirkso   331 Feb  4 23:34 Main.class
+-rw-rw---- 1 grdirkso grdirkso  4362 Feb  4 23:34 CreateNewDatabase.class
+-rw-rw---- 1 grdirkso grdirkso   761 Feb  4 23:34 Constants.class
+-rw-rw---- 1 grdirkso grdirkso 11849 Feb  4 23:34 DatabaseOperations.class
+-rw-rw---- 1 grdirkso grdirkso  5294 Feb  4 23:34 ApplicationWrapper.class
+-rw-rw---- 1 grdirkso grdirkso   627 Feb  4 23:34 ApplicationWrapper$1.class
+-rw-rw---- 1 grdirkso grdirkso    18 Feb  4 21:23 README.md
+-rw-rw---- 1 grdirkso grdirkso   180 Feb  4 21:23 Main.java
+-rw-rw---- 1 grdirkso grdirkso 28381 Feb  4 21:23 Homework1Report.docx
+-rw-rw---- 1 grdirkso grdirkso  1791 Feb  4 21:23 HelperFunctions.java
+-rw-rw---- 1 grdirkso grdirkso 21725 Feb  4 21:23 Fortune_500_HQ.csv
+-rw-rw---- 1 grdirkso grdirkso 32414 Feb  4 21:23 DatabaseOperations.java
+-rw-rw---- 1 grdirkso grdirkso  6645 Feb  4 21:23 CreateNewDatabase.java
+-rw-rw---- 1 grdirkso grdirkso   534 Feb  4 21:23 Constants.java
+-rw-rw---- 1 grdirkso grdirkso  7327 Feb  4 21:23 ApplicationWrapper.java
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ javac [K[K[K[K[K[Kjaba[K[Kva Main
+Welcome to the database application!
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 1
+Please enter name of your .csv file without the extension: 
+Fortune_500_HQ
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: q
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ ls -lt
+total 208
+-rw-rw---- 1 grdirkso grdirkso   109 Feb  4 23:36 Fortune_500_HQ.config
+-rw-rw---- 1 grdirkso grdirkso     0 Feb  4 23:36 Fortune_500_HQ.overflow
+-rw-rw---- 1 grdirkso grdirkso 42500 Feb  4 23:36 Fortune_500_HQ.data
+-rw-rw---- 1 grdirkso grdirkso     0 Feb  4 23:36 typescript
+-rw-rw---- 1 grdirkso grdirkso  1758 Feb  4 23:34 HelperFunctions.class
+-rw-rw---- 1 grdirkso grdirkso   331 Feb  4 23:34 Main.class
+-rw-rw---- 1 grdirkso grdirkso  4362 Feb  4 23:34 CreateNewDatabase.class
+-rw-rw---- 1 grdirkso grdirkso   761 Feb  4 23:34 Constants.class
+-rw-rw---- 1 grdirkso grdirkso 11849 Feb  4 23:34 DatabaseOperations.class
+-rw-rw---- 1 grdirkso grdirkso  5294 Feb  4 23:34 ApplicationWrapper.class
+-rw-rw---- 1 grdirkso grdirkso   627 Feb  4 23:34 ApplicationWrapper$1.class
+-rw-rw---- 1 grdirkso grdirkso    18 Feb  4 21:23 README.md
+-rw-rw---- 1 grdirkso grdirkso   180 Feb  4 21:23 Main.java
+-rw-rw---- 1 grdirkso grdirkso 28381 Feb  4 21:23 Homework1Report.docx
+-rw-rw---- 1 grdirkso grdirkso  1791 Feb  4 21:23 HelperFunctions.java
+-rw-rw---- 1 grdirkso grdirkso 21725 Feb  4 21:23 Fortune_500_HQ.csv
+-rw-rw---- 1 grdirkso grdirkso 32414 Feb  4 21:23 DatabaseOperations.java
+-rw-rw---- 1 grdirkso grdirkso  6645 Feb  4 21:23 CreateNewDatabase.java
+-rw-rw---- 1 grdirkso grdirkso   534 Feb  4 21:23 Constants.java
+-rw-rw---- 1 grdirkso grdirkso  7327 Feb  4 21:23 ApplicationWrapper.java
+]0;grdirkso@turing: ~/databaseProject1grdirkso@turing:~/databaseProject1$ java Maon[K[K[Kain
+Welcome to the database application!
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+There is no database currently open.
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 2
+The existing databases are listed below. Please enter which one you would like to open
+	Fortune_500_HQ
+Database Selection: Fortune_500_HQ
+Opening database...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+3m
+94    3M                                       MAPLEWOOD            MN  55144  91584     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+zimmer biomet holdings
+352   ZIMMER BIOMET HOLDINGS                   WARSAW               IN  46580  18500     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+mycompany
+NOT FOUND
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+walmart
+1     WALMART                                  BENTONVILLE          AR  72716  2300000   
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 5
+Please enter the name of the company who's record you want to update. 
+walmart
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+5
+Enter updated Number of Employees
+2350000
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+4
+Enter updated Zip Code
+72791  19
+What would you like to change?
+[1] Rank
+[2] City
+[3] State
+[4] Zip Code
+[5] Number of Employees
+[6] done updating
+6
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+walmart
+1     WALMART                                  BENTONVILLE          AR  72719  2350000   
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 6
+report.txt created
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+secret machines
+Please enter the city the company is located in (truncated at 20 characters): 
+bentonville
+Please enter the state the company is located in (truncated at 3 characters): 
+ar
+Please enter the zip code of the company (truncated at 6 characters): 
+72719
+Please enter the company's number of employees (truncated at 10 charactes): 
+2300
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+chicken fars  s  ms
+Please enter the city the company is located in (truncated at 20 characters): 
+fayetteville
+Please enter the state the company is located in (truncated at 3 characters): 
+AR
+Please enter the zip code of the company (truncated at 6 characters): 
+72701
+Please enter the company's number of employees (truncated at 10 charactes): 
+3400
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+omnic
+Please enter the city the company is located in (truncated at 20 characters): 
+Columbus     ombus
+Please enter the state the company is located in (truncated at 3 characters): 
+GA
+Please enter the zip code of the company (truncated at 6 characters): 
+31820
+Please enter the company's number of employees (truncated at 10 charactes): 
+240
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+secret Machines
+501   SECRET MACHINES                          BENTONVILLE          AR  72719  2300      
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 8
+Please enter the name of the company you wish to delete
+els   e wells fargo
+Deleting Record...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+wels ls fargo
+NOT FOUND
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+minions utopia
+Please enter the city the company is located in (truncated at 20 characters): 
+springdale
+Please enter the state the company is located in (truncated at 3 characters): 
+72701 2
+Please enter the zip code of the company (truncated at 6 characters): 
+`	 72702
+Please enter the company's number of employees (truncated at 10 charactes): 
+34
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 7
+Please enter the name of the company (truncated at 40 characters): 
+maga mech
+Please enter the city the company is located in (truncated at 20 characters): 
+prarie grove
+Please enter the state the company is located in (truncated at 3 characters): 
+ar
+Please enter the zip code of the company (truncated at 6 characters): 
+72756
+Please enter the company's number of employees (truncated at 10 charactes): 
+231
+Record Added...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+sect ret machines
+501   SECRET MACHINES                          BENTONVILLE          AR  72719  2300      
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+apple
+3     APPLE                                    CUPERTINO            CA  95014  116000    
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+3m
+94    3M                                       MAPLEWOOD            MN  55144  91584     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+Please enter the name of the company you want to display. 
+zimmer biomet holdings
+352   ZIMMER BIOMET HOLDINGS                   WARSAW               IN  46580  18500     
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 3
+Closing database...
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: 4
+There is no database currently open.
+
+Please enter which operation number you would like to complete (or enter 'q' to quit):
+
+	[1] Create Database
+	[2] Open Database
+	[3] Close Database
+	[4] Display Record
+	[5] Update Record
+	[6] Create Report
+	[7] Add Record
+	[8] Delete Record
+
+Selection: q
