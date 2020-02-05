@@ -81,11 +81,11 @@ public class ApplicationWrapper {
                     }
                     break;
                 case "6":
-                if (this.currentDatabase == null) {
-                    System.out.println("There are no database currently open.");
-                }else{
-                    dbOps.createReport();
-                }
+                    if (this.currentDatabase == null) {
+                        System.out.println("There are no database currently open.");
+                    } else {
+                        dbOps.createReport();
+                    }
                     break;
                 case "7":
                     if (this.currentDatabase == null) {
@@ -139,7 +139,7 @@ public class ApplicationWrapper {
     private ArrayList<String> checkForDatabases() {
         File dir = new File(".");
 
-        File[] files = dir.listFiles(new FilenameFilter(){
+        File[] files = dir.listFiles(new FilenameFilter() {
         
             @Override
             public boolean accept(File dir, String name) {

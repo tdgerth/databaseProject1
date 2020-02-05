@@ -100,17 +100,17 @@ public class CreateNewDatabase {
             FileWriter configFileWriter = new FileWriter(this.configFile.toString());
             PrintWriter configFilePrinter = new PrintWriter(configFileWriter);
 
-            configFilePrinter.printf("%-10s", "RANK,5");
+            configFilePrinter.printf("%-6s", "RANK,5");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-45s", "NAME,40");
+            configFilePrinter.printf("%-7s", "NAME,40");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-25s", "CITY,20");
+            configFilePrinter.printf("%-7s", "CITY,20");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-8s", "STATE,3");
+            configFilePrinter.printf("%-7s", "STATE,3");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-9s", "ZIP,6");
+            configFilePrinter.printf("%-5s", "ZIP,6");
             configFilePrinter.print(System.getProperty("line.separator"));
-            configFilePrinter.printf("%-20s", "EMPLOYEES,10");
+            configFilePrinter.printf("%-12s", "EMPLOYEES,10");
             configFilePrinter.print(System.getProperty("line.separator"));
             configFilePrinter.printf("%-13s", "RECORDS,");
             configFilePrinter.print(System.getProperty("line.separator"));
@@ -142,17 +142,22 @@ public class CreateNewDatabase {
 
         try {
             String inputDatabaseName = inputReader.readLine();
-            if (new File(inputDatabaseName + ".data").exists()) {
-                System.out.println("This database already exists. Would you like to overwrite it? (y/n)");
-                if (inputReader.readLine().equals("y")) {
-                    new File(inputDatabaseName + ".data").delete();
-                    new File(inputDatabaseName + ".config").delete();
-                    new File(inputDatabaseName + ".overflow").delete();
-                    this.databaseName = inputDatabaseName;
-                } else {
-                    System.out.println("Returning to Menu...");
-                    this.validDatabaseName = false;
+            if (new File(inputDatabaseName + ".csv").exists()) {
+                if (new File(inputDatabaseName + ".data").exists()) {
+                    System.out.println("This database already exists. Would you like to overwrite it? (y/n)");
+                    if (inputReader.readLine().equals("y")) {
+                        new File(inputDatabaseName + ".data").delete();
+                        new File(inputDatabaseName + ".config").delete();
+                        new File(inputDatabaseName + ".overflow").delete();
+                        this.databaseName = inputDatabaseName;
+                    } else {
+                        System.out.println("Returning to Menu...");
+                        this.validDatabaseName = false;
+                    }
                 }
+            } else {
+                System.out.println("There is no .csv file with that name");
+                this.validDatabaseName = false;
             }
         } catch (IOException e) {
             System.out.println(e);

@@ -1,5 +1,7 @@
 
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -25,7 +27,7 @@ public class DatabaseOperations {
 
             if (recordType.equals("normal")) {
                 // Reading in the number of normal records from the .config file starting from offset 142 bytes (where the number for RECORDS begins)
-                raf.getChannel().position(139);
+                raf.getChannel().position(64);
                 byte[] numRecords = new byte[5];
         
                 raf.read(numRecords, 0, 5);
@@ -33,7 +35,7 @@ public class DatabaseOperations {
                 return new String(numRecords).stripTrailing();
             } else {
                 // Reading in the number of overflow records from the .config file starting from offset 166 (there the number for OVERFLOW-RECORDS begins)
-                raf.getChannel().position(161);
+                raf.getChannel().position(88);
                 byte[] numOverflowRecords = new byte[1];
         
                 raf.read(numOverflowRecords, 0, 1);
@@ -95,8 +97,8 @@ public class DatabaseOperations {
         try {
             FileInputStream fis = new FileInputStream(this.databaseName + ".config");
 
-            // Reading in the number of normal records from the .config file starting from offset 177 bytes (where the number for HIGHEST-RANK begins)
-            fis.getChannel().position(177);
+            // Reading in the number of normal records from the .config file starting from offset 104 bytes (where the number for HIGHEST-RANK begins)
+            fis.getChannel().position(104);
             byte[] highestRank = new byte[5];
     
             fis.read(highestRank, 0, 5);
@@ -138,12 +140,12 @@ public class DatabaseOperations {
             if (recordType.equals("normal")) {
                 String currentNumRecords = HelperFunctions.addWhitespacesToEnd(Integer.toString(numRecordsIn), 5);
 
-                raf.getChannel().position(139);
+                raf.getChannel().position(64);
                 raf.write(currentNumRecords.getBytes());
                 raf.close();
             } else {
                 String currentNumRecords = Integer.toString(numRecordsIn);
-                raf.getChannel().position(161);
+                raf.getChannel().position(88);
                 raf.write(currentNumRecords.getBytes());
                 raf.close();
             }
@@ -181,16 +183,16 @@ public class DatabaseOperations {
 
             for (int i = 0; i < newHighestRankBytes.length; i++) {
             // Truncating if the characters for newHighestRankString exceed the allocated bytes for HIGHEST-RANK
-            if (i == 5) {
-                break;
-            }
+                if (i == 5) {
+                    break;
+                }
                 highestRank[i] = newHighestRankBytes[i];
             }
 
             // Writing the updated number of records back to the config file
             RandomAccessFile raf = new RandomAccessFile(this.databaseName + ".config", "rws");
 
-            raf.getChannel().position(177);
+            raf.getChannel().position(104);
             raf.write(highestRank);
             raf.close();
     
@@ -213,8 +215,28 @@ public class DatabaseOperations {
  
          try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
+            RandomAccessFile oin = new RandomAccessFile(this.databaseName + ".overflow", "rws");
+
             //find company to update
+            String recordLocation = "normal";
             int recordNumber = this.binarySearch(din, companyName.toUpperCase());
+
+            if (recordNumber == -1) {
+                int numOverflowRecords = Integer.parseInt(getNumberOfRecords("overflow"));
+
+                for (int i = 0; i < numOverflowRecords; i++) {
+                    String record = getRecord("overflow", oin, i);
+                    String recordName = record.substring(5,45);
+                    recordName = recordName.trim();
+
+                    if (companyName.toUpperCase().equals(recordName)) {
+                        recordNumber = i;
+                        recordLocation = "overflow";
+                        break;
+                    }
+                }
+            }
+
             //if company found
             if(recordNumber != -1){
                 //untill the user wants to stop updating
@@ -227,52 +249,87 @@ public class DatabaseOperations {
                     System.out.println("[5] Number of Employees");
                     System.out.println("[6] done updating");
                     option = inputReader.readLine();
+
+                    byte [] update;
                     switch(option) {
                         case "1":
                             System.out.println("Enter updated Rank");
-                            option = inputReader.readLine();
+                            update = HelperFunctions.getInputDataBytes(5);
+                            // option = inputReader.readLine();
                             //format input to fixed length
-                            option = String.format("%-5s", option);
-                            rank = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1)));
-                            //replace current rank with new rank
-                            din.write(rank); 
+                            
+                            // option = String.format("%-5s", option.toUpperCase());
+                            // rank = option.getBytes();
+                            if (recordLocation.equals("normal")) {
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber)));
+                                //replace current rank with new rank
+                                din.write(update);     
+                            } else {
+                                oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber)));
+                                //replace current rank with new rank
+                                oin.write(update); 
+                            }
                             break;
                         case "2":
                             System.out.println("Enter updated City");
-                            option = inputReader.readLine();
-                            option = String.format("%-20s", option.toUpperCase());
-                            cityName = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+45);
-                            din.write(cityName);                        
+                            update = HelperFunctions.getInputDataBytes(20);
+                            // option = inputReader.readLine();
+                            // option = String.format("%-20s", option.toUpperCase());
+                            // cityName = option.getBytes();
+                            if (recordLocation.equals("normal")) {
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+45);
+                                din.write(update);   
+                            } else {
+                                oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+45);
+                                oin.write(update);   
+                            }                       
                             break;
                         case "3":
                             System.out.println("Enter updated State Abbreviation");
-                            option = inputReader.readLine();
-                            option = String.format("%-3s", option.toUpperCase());
-                            state = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+65);
-                            din.write(state);
+                            // option = inputReader.readLine();
+                            // option = String.format("%-3s", option.toUpperCase());
+                            // state = option.getBytes();
+                            update = HelperFunctions.getInputDataBytes(3);
+                            if (recordLocation.equals("normal")) {
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+65);
+                                din.write(update);
+                            } else {
+                                oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+65);
+                                oin.write(update);
+                            }
                             break;
                         case "4":
                             System.out.println("Enter updated Zip Code");
-                            option = inputReader.readLine();
-                            option = String.format("%-6s", option);
-                            zip = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+68);
-                            din.write(zip);
+                            // option = inputReader.readLine();
+                            // option = String.format("%-6s", option.toUpperCase());
+                            // zip = option.getBytes();
+                            update = HelperFunctions.getInputDataBytes(6);
+                            if (recordLocation.equals("normal")) {
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+68);
+                                din.write(update);
+                            } else {
+                                oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+68);
+                                oin.write(update);
+                            }
                             break;
                         case "5":
                             System.out.println("Enter updated Number of Employees");
-                            option = inputReader.readLine();
-                            option = String.format("%-10s", option);
-                            numEmplyees = option.getBytes();
-                            din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+74);
-                            din.write(numEmplyees);
+                            // option = inputReader.readLine();
+                            // option = String.format("%-10s", option.toUpperCase());
+                            // numEmplyees = option.getBytes();
+                            update = HelperFunctions.getInputDataBytes(10);
+                            if (recordLocation.equals("normal")) {
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+74);
+                                din.write(update);
+                            } else {
+                                oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+74);
+                                oin.write(update);   
+                            }
                             break;
                         case "6":
                             quit = true;
                             din.close();
+                            oin.close();
                             break;
                         default:
                             System.out.println("That is not a valid option, please select a valid option");
@@ -301,7 +358,7 @@ public class DatabaseOperations {
         int Low = 0;
         int NUM_RECORDS = Integer.parseInt(getNumberOfRecords("normal"));;
         int High = NUM_RECORDS-1;
-        int Middle;
+        int Middle = 0;
         String MiddleId;
         String record = "";
         boolean Found = false;
@@ -314,13 +371,29 @@ public class DatabaseOperations {
             MiddleId = record.substring(5,45);
             MiddleId = MiddleId.trim();
             int result = MiddleId.compareTo(id);
-            if (result == 0)   // ids match
+
+            if (result == 0) {
+                // ids match
                 return Middle;
-            else if (result < 0)
+            } 
+            else if (result < 0) {
                 Low = Middle + 1;
-            else
+            }
+            else {
                 High = Middle - 1;
+            }
         }
+
+        if (Low > High) {
+            record = getRecord("normal", Din, Middle);
+            // if (record != "") {
+                MiddleId = record.substring(5, 45).trim().toUpperCase();
+                if (MiddleId.compareTo(id) == 0) {
+                    return Middle;
+                }
+            // }
+        }
+
         return -1;
     }
 
@@ -363,11 +436,17 @@ public class DatabaseOperations {
             System.out.println("Please enter the name of the company you wish to delete");
             String companyName = HelperFunctions.getInputDataString();
             RandomAccessFile rafData = new RandomAccessFile(this.databaseName + ".data", "rws");
+            int deleteLocation = binarySearch(rafData, companyName);
 
-            if (binarySearch(rafData, companyName) != -1) {
-                int deleteLocation = binarySearchToFindClosest(companyName, 1, Integer.parseInt(getNumberOfRecords("normal")) - 1);
+            if (deleteLocation != -1) {
 
-                rafData.getChannel().position(Constants.NUM_BYTES_LINUX_RECORD * deleteLocation + Constants.NUM_BYTES_RANK);
+                deleteLocation = binarySearchToFindClosest(companyName, 0, Integer.parseInt(getNumberOfRecords("normal")));
+                // if (deleteLocation == 0) {
+                    rafData.getChannel().position(Constants.NUM_BYTES_LINUX_RECORD * deleteLocation + Constants.NUM_BYTES_RANK);
+                // } else {
+                //     rafData.getChannel().position(Constants.NUM_BYTES_LINUX_RECORD * (deleteLocation + 1) + Constants.NUM_BYTES_RANK);
+                // }
+
                 rafData.write(HelperFunctions.addWhitespacesToEnd("MISSING-RECORD", Constants.NUM_BYTES_COMPANY_NAME).getBytes(), 0, Constants.NUM_BYTES_COMPANY_NAME);
                 rafData.close();
 
@@ -455,9 +534,9 @@ public class DatabaseOperations {
         addRecordToOverflow(companyNameBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 5);
         addRecordToOverflow(companyCityBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 45);
         addRecordToOverflow(companyStateBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 65);
-        addRecordToOverflow(companyZipCodeBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 67);
-        addRecordToOverflow(companyEmployeesBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 72);
-        addRecordToOverflow(newLineBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 82);
+        addRecordToOverflow(companyZipCodeBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 68);
+        addRecordToOverflow(companyEmployeesBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 74);
+        addRecordToOverflow(newLineBytes, numOverflowRecords * Constants.NUM_BYTES_LINUX_RECORD + 84);
 
         numOverflowRecords++;
 
@@ -500,17 +579,45 @@ public class DatabaseOperations {
     public void displayRecord(String companyName) {
         try {
             RandomAccessFile din = new RandomAccessFile(this.databaseName + ".data", "rws");
-            int record = this.binarySearch(din, companyName.toUpperCase());
+            RandomAccessFile oin = new RandomAccessFile(this.databaseName + ".overflow", "rws");
+            int record = this.binarySearch(din, companyName.trim().toUpperCase());
+            String recordLocation = "normal";
+
+            if (record == -1) {
+                int numOverflowRecords = Integer.parseInt(getNumberOfRecords("overflow"));
+
+                for (int i = 0; i < numOverflowRecords; i++) {
+                    String overflowRecord = getRecord("overflow", oin, i);
+                    String recordName = overflowRecord.substring(5,45);
+                    recordName = recordName.trim();
+
+                    if (companyName.toUpperCase().equals(recordName)) {
+                        record = i;
+                        recordLocation = "overflow";
+                        break;
+                    }
+                }
+            }
+
             //if company is found display the company
             if(record != -1){
-                System.out.println(this.getRecord("normal", din, record + 1));
+                if (recordLocation.equals("normal")) {
+                    if (record == 0) {
+                        System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("normal", din, record)));
+                    } else {
+                        System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("normal", din, record + 1)));
+                    }
+                } else {
+                    System.out.println(HelperFunctions.displayReadableRecord(this.getRecord("overflow", oin, record)));
+                }
             } 
             //if not, let the user know
             else {
                 System.out.println("NOT FOUND");
             }
-           
+            
             din.close();
+            oin.close();
             
 
         } catch (IOException ex) {
@@ -590,14 +697,23 @@ public class DatabaseOperations {
             ex.printStackTrace();
         }
     }
+
     public void createReport(){
+        int numRecords = Integer.parseInt(getNumberOfRecords("normal"));
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.databaseName + ".data"));
             FileWriter report = new FileWriter( "report.txt");
-            for(int i = 1; i < 11 ; i++) {
-             report.write(br.readLine() + System.getProperty("line.separator"));
-            }  
+
+            if (numRecords < 10) {
+                for(int i = 1; i < numRecords ; i++) {
+                    report.write(HelperFunctions.displayReadableRecord(br.readLine()) + System.getProperty("line.separator"));
+                } 
+            } else {
+                for(int i = 1; i < 11 ; i++) {
+                    report.write(HelperFunctions.displayReadableRecord(br.readLine()) + System.getProperty("line.separator"));
+                }  
+            }
             report.close();
             br.close();
         } catch (Exception e) {
