@@ -22,7 +22,7 @@ public class CreateNewDatabase {
     public File dataFile;
     public File configFile;
 
-    public byte[] currentRecord = new byte[86];
+    public byte[] currentRecord = new byte[85];
     
     // Creating a new database with all three necessary files and instantiating them
     CreateNewDatabase() {

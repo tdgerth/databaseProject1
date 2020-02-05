@@ -30,7 +30,7 @@ public class DatabaseOperations {
         
                 raf.read(numRecords, 0, 5);
                 raf.close();
-                return new String(numRecords).stripTrailing();
+                return new String(numRecords).trim();
             } else {
                 // Reading in the number of overflow records from the .config file starting from offset 166 (there the number for OVERFLOW-RECORDS begins)
                 raf.getChannel().position(161);
@@ -38,7 +38,7 @@ public class DatabaseOperations {
         
                 raf.read(numOverflowRecords, 0, 1);
                 raf.close();
-                return new String(numOverflowRecords).stripTrailing();
+                return new String(numOverflowRecords).trim();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -83,7 +83,7 @@ public class DatabaseOperations {
     
             recordFile.read(record, 0, 40);
             recordFile.close();
-            return new String(record).stripTrailing();
+            return new String(record).trim();
         } catch (IOException ex) {
             ex.printStackTrace();
             return new String("Error");
@@ -101,7 +101,7 @@ public class DatabaseOperations {
     
             fis.read(highestRank, 0, 5);
             fis.close();
-            return new String(highestRank).stripTrailing();
+            return new String(highestRank).trim();
         } catch (IOException ex) {
             ex.printStackTrace();
             return "Error";
@@ -476,7 +476,7 @@ public class DatabaseOperations {
             updateNumRecords("overflow", numOverflowRecords);
         }
 
-        String currentHighestRank = getHighestRank().stripTrailing();
+        String currentHighestRank = getHighestRank().trim();
         updateHighestRank(Integer.parseInt(currentHighestRank) + 1);
 
         System.out.println("Record Added...");

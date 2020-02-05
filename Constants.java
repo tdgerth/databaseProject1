@@ -1,5 +1,5 @@
 public class Constants {
-    public static int NUM_BYTES_LINUX_RECORD = 86;
+    public static int NUM_BYTES_LINUX_RECORD = 85;
     public static int NUM_BYTES_WINDOWS_RECORD = 85;
     public static int NUM_BYTES_RANK = 5;
     public static int NUM_BYTES_COMPANY_NAME = 40;
