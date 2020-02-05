@@ -38,7 +38,6 @@ public class ApplicationWrapper {
                         }
 
                         inputDatabaseToOpen(databases);
-                        System.out.println("Opening database...");
                     }
                     break;
                 case "3":
