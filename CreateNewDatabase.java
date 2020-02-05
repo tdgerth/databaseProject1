@@ -155,6 +155,7 @@ public class CreateNewDatabase {
                         this.validDatabaseName = false;
                     }
                 }
+                this.databaseName = inputDatabaseName;
             } else {
                 System.out.println("There is no .csv file with that name");
                 this.validDatabaseName = false;

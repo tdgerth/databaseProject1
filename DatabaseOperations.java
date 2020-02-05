@@ -261,7 +261,7 @@ public class DatabaseOperations {
                             // option = String.format("%-5s", option.toUpperCase());
                             // rank = option.getBytes();
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber)));
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1)));
                                 //replace current rank with new rank
                                 din.write(update);     
                             } else {
@@ -277,7 +277,7 @@ public class DatabaseOperations {
                             // option = String.format("%-20s", option.toUpperCase());
                             // cityName = option.getBytes();
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+45);
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+45);
                                 din.write(update);   
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+45);
@@ -291,7 +291,7 @@ public class DatabaseOperations {
                             // state = option.getBytes();
                             update = HelperFunctions.getInputDataBytes(3);
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+65);
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+65);
                                 din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+65);
@@ -305,7 +305,7 @@ public class DatabaseOperations {
                             // zip = option.getBytes();
                             update = HelperFunctions.getInputDataBytes(6);
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+68);
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+68);
                                 din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+68);
@@ -319,7 +319,7 @@ public class DatabaseOperations {
                             // numEmplyees = option.getBytes();
                             update = HelperFunctions.getInputDataBytes(10);
                             if (recordLocation.equals("normal")) {
-                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+74);
+                                din.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber+1))+74);
                                 din.write(update);
                             } else {
                                 oin.getChannel().position((Constants.NUM_BYTES_LINUX_RECORD * (recordNumber))+74);
